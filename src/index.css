@@ -1,0 +1,39 @@
+
+@import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f8fafc;
+  color: #0f172a;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+@media print {
+	body {
+		background: #ffffff;
+	}
+
+	.print-hidden {
+		display: none !important;
+	}
+
+	.print-reset {
+		margin: 0 !important;
+		padding: 0 !important;
+		max-width: none !important;
+	}
+
+	.print-preview {
+		border: none !important;
+		box-shadow: none !important;
+		padding: 0 !important;
+		min-height: auto !important;
+	}
+}
