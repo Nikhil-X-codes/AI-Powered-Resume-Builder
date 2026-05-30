@@ -28,7 +28,7 @@ export async function handler(event) {
   }
 
   const env = globalThis.process?.env ?? {}
-  const apiKey = env.GROQ_API_KEY
+  const apiKey = env.GROQ_API_KEY || env.VITE_GROQ_API_KEY
   if (!apiKey) {
     return {
       statusCode: 500,
@@ -55,7 +55,7 @@ export async function handler(event) {
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: payload.model || env.GROQ_MODEL || DEFAULT_MODEL,
+      model: payload.model || env.GROQ_MODEL || env.VITE_GROQ_MODEL || DEFAULT_MODEL,
       messages: payload.messages,
       max_tokens: payload.max_tokens,
       temperature: payload.temperature ?? 0.7,

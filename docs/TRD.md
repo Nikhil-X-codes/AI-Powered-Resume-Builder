@@ -300,7 +300,7 @@ const handlePrint = useReactToPrint({
 
 | Concern | Mitigation |
 |---------|------------|
-| **API Key Exposure** | Store `GROQ_API_KEY` in Netlify site environment variables; never expose it in browser code |
+| **API Key Exposure** | Store `GROQ_API_KEY` in Netlify site environment variables; never expose it in browser code. `VITE_GROQ_API_KEY` is only a legacy/local fallback. |
 | **XSS via AI Output** | Sanitize Groq response with `DOMPurify` before rendering in preview |
 | **localStorage Data** | No sensitive PII protection needed for MVP; note: data accessible to any script on domain |
 | **HTTPS Enforcement** | Groq API requires HTTPS; app should be served over HTTPS in production |

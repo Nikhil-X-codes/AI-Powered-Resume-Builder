@@ -64,7 +64,7 @@ npm run lint
 
 ## Environment Variables
 
-Set `GROQ_API_KEY` in your Netlify site environment variables. The browser never needs the Groq key, so there is no Vite `.env` entry for AI access.
+Set `GROQ_API_KEY` in your Netlify site environment variables. The browser never needs the Groq key, so there is no Vite `.env` entry for AI access. If you still have a legacy `VITE_GROQ_API_KEY` locally, the function can read it during local development, but Netlify deployments should use `GROQ_API_KEY`.
 
 When the function is unavailable or the API call fails, the AI helper falls back to local suggestions.
 
