@@ -300,7 +300,7 @@ const handlePrint = useReactToPrint({
 
 | Concern | Mitigation |
 |---------|------------|
-| **API Key Exposure** | Store in `.env` as `VITE_GROQ_API_KEY`; never commit `.env`; add `.env` to `.gitignore` |
+| **API Key Exposure** | Store `GROQ_API_KEY` in Netlify site environment variables; never expose it in browser code |
 | **XSS via AI Output** | Sanitize Groq response with `DOMPurify` before rendering in preview |
 | **localStorage Data** | No sensitive PII protection needed for MVP; note: data accessible to any script on domain |
 | **HTTPS Enforcement** | Groq API requires HTTPS; app should be served over HTTPS in production |
@@ -340,8 +340,8 @@ module.exports = {
 @tailwind components;
 @tailwind utilities;
 
-# 5. Environment variables (.env)
-VITE_GROQ_API_KEY=your_groq_api_key_here
+# 5. Netlify environment variables
+GROQ_API_KEY=your_groq_api_key_here
 
 # 6. Start dev server
 npm run dev
@@ -363,7 +363,7 @@ npm run dev
 | Platform | Method | URL |
 |----------|--------|-----|
 | **Vercel** | GitHub integration + `vite build` | `https://ai-resume-builder.vercel.app` |
-| **Netlify** | Drag-and-drop `dist/` folder | `https://ai-resume-builder.netlify.app` |
+| **Netlify** | GitHub-connected deploy with `netlify/functions/` | `https://ai-resume-builder.netlify.app` |
 | **GitHub Pages** | GitHub Actions workflow | `https://username.github.io/ai-resume-builder` |
 
 **Build Command:** `npm run build`  

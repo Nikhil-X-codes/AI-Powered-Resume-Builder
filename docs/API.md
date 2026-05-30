@@ -425,7 +425,7 @@ if (saved) dispatch({ type: 'LOAD_STATE', payload: saved });
 #### Constructor
 
 ```javascript
-const groqService = new GroqService(import.meta.env.VITE_GROQ_API_KEY);
+const groqService = new GroqService();
 ```
 
 #### Methods
@@ -442,11 +442,9 @@ const groqService = new GroqService(import.meta.env.VITE_GROQ_API_KEY);
 // src/services/groqService.js
 
 export class GroqService {
-  constructor(apiKey) {
-    if (!apiKey) throw new Error('Groq API key is required');
-    this.apiKey = apiKey;
-    this.baseUrl = 'https://api.groq.com/openai/v1';
-    this.model = 'llama-3.1-8b-instant';
+  constructor({ endpoint = '/.netlify/functions/groq-proxy', model = 'llama-3.1-8b-instant' } = {}) {
+    this.endpoint = endpoint;
+    this.model = model;
   }
 
   async generateSummary({ jobTitle, skills, experienceYears, achievements = '', tone = 'professional' }) {
@@ -482,11 +480,10 @@ export class GroqService {
   }
 
   async _callChatAPI(messages, maxTokens = 150) {
-    const response = await fetch(`${this.baseUrl}/chat/completions`, {
+    const response = await fetch(this.endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.apiKey}`
       },
       body: JSON.stringify({
         model: this.model,
@@ -658,11 +655,11 @@ const fetchWithRetry = async (fn, maxRetries = 2, delay = 1000) => {
 
 ---
 
-## Appendix A: Environment Variables
+### Appendix A: Environment Variables
 
 ```bash
-# .env (NEVER commit this file)
-VITE_GROQ_API_KEY=your_groq_api_key_here
+# Netlify site environment variables
+GROQ_API_KEY=your_groq_api_key_here
 VITE_APP_NAME=AI Resume Builder
 VITE_APP_VERSION=1.0.0
 ```
@@ -671,7 +668,7 @@ VITE_APP_VERSION=1.0.0
 
 | Task | Code | File |
 |------|------|------|
-| Call Groq API | `groqService.generateSummary(params)` | `services/groqService.js` |
+| Call AI proxy | `groqService.generateSummary(params)` | `services/groqService.js` |
 | Save data | `storageService.save(state)` | `services/storageService.js` |
 | Load data | `storageService.load()` | `services/storageService.js` |
 | Update field | `dispatch({ type: 'UPDATE_PERSONAL_INFO', payload: { field, value } })` | Context |

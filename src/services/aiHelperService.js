@@ -1,5 +1,7 @@
 import GroqService from './groqService'
 
+const groq = new GroqService()
+
 const defaultSummaries = [
   "Results-driven professional with a proven track record of optimizing workflows, leading cross-functional teams, and delivering high-impact solutions. Skilled in collaborating with stakeholders to align design with business goals.",
   "Detail-oriented and analytical specialist with extensive experience in designing scalable systems, building reusable component libraries, and spearheading user research studies to drive product success.",
@@ -42,13 +44,9 @@ const defaultAchDetails = [
 export const aiHelperService = {
   enhanceSummary: async (title, currentSkills) => {
     try {
-      const apiKey = import.meta.env.VITE_GROQ_API_KEY
-      if (apiKey) {
-        const groq = new GroqService(apiKey)
-        const prompt = `Write a professional resume summary for a ${title || 'Professional'} skilled in ${(currentSkills || []).join(', ') || 'industry standards'}. Keep it to 2-3 sentences. Do not use first-person pronouns.`
-        const res = await groq._callChatAPI([{ role: 'user', content: prompt }], 150)
-        if (res) return res
-      }
+      const prompt = `Write a professional resume summary for a ${title || 'Professional'} skilled in ${(currentSkills || []).join(', ') || 'industry standards'}. Keep it to 2-3 sentences. Do not use first-person pronouns.`
+      const res = await groq._callChatAPI([{ role: 'user', content: prompt }], 150)
+      if (res) return res
     } catch (e) {
       console.warn("Groq API call failed, falling back to local suggestion", e)
     }
@@ -62,13 +60,9 @@ export const aiHelperService = {
 
   enhanceHighlight: async (role, company) => {
     try {
-      const apiKey = import.meta.env.VITE_GROQ_API_KEY
-      if (apiKey) {
-        const groq = new GroqService(apiKey)
-        const prompt = `Write a single professional resume accomplishment bullet point for the role: ${role || 'team member'} at ${company || 'our company'}. Use action verbs, be concise (max 20 words), and do not use first-person pronouns.`
-        const res = await groq._callChatAPI([{ role: 'user', content: prompt }], 80)
-        if (res) return res
-      }
+      const prompt = `Write a single professional resume accomplishment bullet point for the role: ${role || 'team member'} at ${company || 'our company'}. Use action verbs, be concise (max 20 words), and do not use first-person pronouns.`
+      const res = await groq._callChatAPI([{ role: 'user', content: prompt }], 80)
+      if (res) return res
     } catch (e) {
       console.warn("Groq API call failed, falling back to local suggestion", e)
     }
@@ -90,13 +84,9 @@ export const aiHelperService = {
 
   enhanceEducation: async (degree, school) => {
     try {
-      const apiKey = import.meta.env.VITE_GROQ_API_KEY
-      if (apiKey) {
-        const groq = new GroqService(apiKey)
-        const prompt = `Write a brief resume detail bullet point for a ${degree || 'degree'} at ${school || 'school'}. Max 15 words.`
-        const res = await groq._callChatAPI([{ role: 'user', content: prompt }], 60)
-        if (res) return res
-      }
+      const prompt = `Write a brief resume detail bullet point for a ${degree || 'degree'} at ${school || 'school'}. Max 15 words.`
+      const res = await groq._callChatAPI([{ role: 'user', content: prompt }], 60)
+      if (res) return res
     } catch (e) {
       console.warn(e)
     }
@@ -106,13 +96,9 @@ export const aiHelperService = {
 
   enhanceAchievement: async (title, issuer) => {
     try {
-      const apiKey = import.meta.env.VITE_GROQ_API_KEY
-      if (apiKey) {
-        const groq = new GroqService(apiKey)
-        const prompt = `Write a brief resume accomplishment detail for receiving the award ${title || 'award'} from ${issuer || 'organization'}. Max 15 words.`
-        const res = await groq._callChatAPI([{ role: 'user', content: prompt }], 60)
-        if (res) return res
-      }
+      const prompt = `Write a brief resume accomplishment detail for receiving the award ${title || 'award'} from ${issuer || 'organization'}. Max 15 words.`
+      const res = await groq._callChatAPI([{ role: 'user', content: prompt }], 60)
+      if (res) return res
     } catch (e) {
       console.warn(e)
     }

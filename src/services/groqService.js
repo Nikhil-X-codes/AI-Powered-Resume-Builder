@@ -1,9 +1,7 @@
 export class GroqService {
-  constructor(apiKey = import.meta.env.VITE_GROQ_API_KEY) {
-    if (!apiKey) throw new Error('Groq API key is required')
-    this.apiKey = apiKey
-    this.baseUrl = 'https://api.groq.com/openai/v1'
-    this.model = import.meta.env.VITE_GROQ_MODEL || 'llama-3.1-8b-instant'
+  constructor({ endpoint = '/.netlify/functions/groq-proxy', model = 'llama-3.1-8b-instant' } = {}) {
+    this.endpoint = endpoint
+    this.model = model
   }
 
   async generateSummary({ jobTitle, skills = [], experienceYears = '', achievements = '', tone = 'professional' }) {
@@ -60,11 +58,10 @@ export class GroqService {
       throw new Error('Invalid request: max_tokens must be between 1 and 8192')
     }
 
-    const response = await fetch(`${this.baseUrl}/chat/completions`, {
+    const response = await fetch(this.endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.apiKey}`,
       },
       body: JSON.stringify({
         model: this.model,

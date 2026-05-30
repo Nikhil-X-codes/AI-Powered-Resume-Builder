@@ -21,7 +21,7 @@ A client-side resume builder built with React and Vite. The app lets users enter
 - Lucide React icons
 - react-to-print for PDF export
 - dompurify for sanitizing generated content
-- Groq API for AI assistance
+- Groq AI via a Netlify Function proxy
 
 ## Getting Started
 
@@ -64,14 +64,9 @@ npm run lint
 
 ## Environment Variables
 
-Create a .env file in the project root if you want AI features to use Groq:
+Set `GROQ_API_KEY` in your Netlify site environment variables. The browser never needs the Groq key, so there is no Vite `.env` entry for AI access.
 
-```bash
-VITE_GROQ_API_KEY=your_api_key_here
-VITE_GROQ_MODEL=llama-3.1-8b-instant
-```
-
-The app still works without an API key. When the key is missing or the API call fails, the AI helper falls back to local suggestions.
+When the function is unavailable or the API call fails, the AI helper falls back to local suggestions.
 
 ## Project Structure
 
